@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+<h3>Está é página de Home</h3>
+
+{% block content %}
+<div class="container">
+
+<div class="row">
+    {% for p in produto_list %}
+    <div class="col-md-4">
+        <h4>{{p.titulo}}</h4>
+        <img src="{{p.image.url}}" alt="" width="150">
+    </div>
+    
+    {% endfor %}
+</div>
+</div>
+
+{% endblock %}
