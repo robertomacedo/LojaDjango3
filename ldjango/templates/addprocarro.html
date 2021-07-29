@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Carrinho{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h5>Produto adicionado ao arrinho: {{produto.titulo}}</h5>
+    <table class="table table-strip">
+        <thead>
+            <th>Produto</th>
+            <th>Preço</th>
+            <th>Foto</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{produto.titulo}}</td>
+                <td>{{produto.vend}}</td>
+                <td><img src="{{produto.image.url}}" width="40px"></img></td>
+            </tr>
+        </tbody>
+    </table>
+
+    
+</div>
+
+{% endblock %}
