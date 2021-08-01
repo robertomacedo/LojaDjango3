@@ -51,7 +51,7 @@ class CarroProduto(models.Model):
     produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
     avaliacao = models.PositiveIntegerField()
     quantidade = models.PositiveIntegerField()
-    subtoral = models.PositiveIntegerField()
+    subtotal = models.PositiveIntegerField()
 
     def __str__(self) -> str:
         return "Carro" + str(self.carro.id) + "CarroProduto:" + str(self.id)
