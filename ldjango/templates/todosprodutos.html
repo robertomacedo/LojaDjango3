@@ -11,7 +11,7 @@
         {% for p in cat.produto_set.all %}
             <div class="col-md-4">
                 <div class="m-3">  
-                    <h4><a href="{% url 'ldjango:produtodetalhes' p.slug %}">{{p.titulo}}</a></h4>
+                    <h4><a href="{% url 'ldjango:produtodetalhes' p.slug %}"> {{p.titulo}}</a></h4>
                     <img src="{{p.image.url}}" alt="img" class="img-fluid" style="height: 100px; object-fit: cover;">
                     <p class="mt-3"><strike>R$ {{p.preco_mercado}}</strike> por R$ {{p.vend}}</p>
                     <a href="{% url 'ldjango:addcarro' p.id %}" class="btn btn-success">Comprar</a>

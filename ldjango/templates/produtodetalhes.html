@@ -14,7 +14,7 @@
             <h3>{{produto.titulo}}</h3>
             <h3>Categoria: {{produto.categoria}}</h3>
             <h5>Preço: <strike>R$ {{produto.preco_mercado}}</strike> R$ {{produto.vend}}</h5>
-            <a href="{% url 'ldjango:addcarro' p.id %}" class="btn btn-success">Comprar</a><hr>
+            <a href="{% url 'ldjango:addcarro' produto.id %}" class="btn btn-success">Comprar</a><hr>
             <p class="text-danger">Garantia: {{produto.garantia}}</p>
             <p class="text-danger">Politica de devolução: {{produto.devolucao}}</p><hr>
             <p class="text-success">{{produto.descricao}}</p>

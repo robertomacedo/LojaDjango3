@@ -7,8 +7,8 @@
         <div class="row">
             <div class="col-md-8">
                 <h4>Itens do carrinho</h4>
-                <table>
-                    <thead>
+                <table class="table">
+                    <thead class="table-light">
                         <tr>
                             <th>Cod</th>
                             <th>Produto</th>
@@ -19,7 +19,25 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        {% for cp in carro.carroproduto_set.all %}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{cp.produto.titulo}}</td>
+                            <td>{{cp.avaliacao}}</td>
+                            <td>{{cp.quantidade}}</td>
+                            <td>{{cp.subtotal}}</td>
+                            <td>
+                                <a href="{% url 'ldjango:manipularcarro' cp.id %} ?acao=inc" class="btn btn-success">+</a>
+                                <a href="{% url 'ldjango:manipularcarro' cp.id %} ?acao=dcr" class="btn btn-warning">-</a>
+                                <a href="{% url 'ldjango:manipularcarro' cp.id %} ?acao=rmv" class="btn btn-danger">x</a>
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+                        <tr>
+                            <th colspan="4" class="text-right">Carrinho total</th>
+                            <th>R$. {{carro.total}}</th>
+                        </tr>
                     </tbody>
                 </table>
             </div>
