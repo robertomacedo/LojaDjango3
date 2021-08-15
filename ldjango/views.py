@@ -92,13 +92,21 @@ class ManipularCarroView(View):
             carro_obj.save()
 
         elif acao == "dcr":
-            pass
+            cp_obj.quantidade -= 1
+            cp_obj.subtotal -= cp_obj.avaliacao
+            cp_obj.save()
+            carro_obj.total -= cp_obj.avaliacao
+            carro_obj.save()
+
         elif acao == "rmv":
-            pass
+            carro_obj.total -= cp_obj.subtotal
+            carro_obj.save()
+            cp_obj.delete()
+            
         else:
             pass
 
-        return redirect("ldjango:meu-carro")
+        return redirect('ldjango:meu-carro')
 
 
 class ContatoView(TemplateView):
