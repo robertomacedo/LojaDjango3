@@ -36,7 +36,15 @@
                         <tr>
                             <th colspan="4" class="text-right">Total</th>
                             <th>R$. {{carro.total}}</th>
+                            {% if carro.carroproduto_set.all %}
+                            <th><a href="{% url 'ldjango:limparcarro' %}" class="btn-sm btn-warning">Limpar Carrinho</a></th>
+                            {% endif %}
                         </tr>
+                      <tr>
+                        {% if carro.carroproduto_set.all %}
+                        <th><a href="{% url 'ldjango:checkout' %}" class="btn-sm btn-info">Processar Compra</a></th>
+                        {% endif %}
+                      </tr>
                     </tbody>
                 </table>
             </div>

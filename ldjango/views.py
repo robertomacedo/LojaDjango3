@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
-from django.views.generic import View, TemplateView
+from django.views.generic import View, TemplateView, CreateView
+from django.urls import reverse_lazy
+from .forms import Checar_PedidoForm
 from .models import *
 
 
@@ -77,6 +79,21 @@ class MeuCarroView(TemplateView):
         context['carro'] = carro
         return context
 
+
+class LimparCarroView(View):
+    def get(self, request, *args, **kwargs):
+
+        carro_id = request.session.get("carro_id", None)
+        if carro_id:
+            carro = Carro.objects.get(id=carro_id)
+            carro.carroproduto_set.all().delete()
+            carro.total = 0
+            carro.save()
+        
+        return redirect("ldjango:meu-carro")
+
+
+
 class ManipularCarroView(View):
     def get(self, request, *args, **kwargs):
         cp_id = self.kwargs["cp_id"]
@@ -97,16 +114,48 @@ class ManipularCarroView(View):
             cp_obj.save()
             carro_obj.total -= cp_obj.avaliacao
             carro_obj.save()
+            if cp_obj.quantidade == 0:
+                cp_obj.delete()
 
         elif acao == "rmv":
             carro_obj.total -= cp_obj.subtotal
             carro_obj.save()
             cp_obj.delete()
-            
+
         else:
             pass
 
         return redirect('ldjango:meu-carro')
+
+
+class CheckoutView(CreateView):
+    template_name = "processar.html"
+    form_class = Checar_PedidoForm
+    success_url = reverse_lazy("ldjango:home")
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        carro_id = self.request.session.get("carro_id", None)
+        if carro_id:
+            carro_obj = Carro.objects.get(id=carro_id)
+        else:
+            carro_obj = None
+        context['carro'] = carro_obj
+        return context
+    
+    def form_valid(self, form):
+        carro_id = self.request.session.get("carro_id")
+        if carro_id:
+            carro_obj = Carro.objects.get(id=carro_id)
+            form.instance.carro = carro_obj
+            form.instance.subtotal = carro_obj.total
+            form.instance.desconto = 0
+            form.instance.total = carro_obj.total
+            form.instance.pedido_status = "Pedido Recebido"
+        else:
+            return redirect("ldjango:home")
+        return super().form_valid(form)
 
 
 class ContatoView(TemplateView):
