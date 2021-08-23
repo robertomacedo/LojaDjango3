@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 max-auto">
+            <h4>Registrar Cliente</h4>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button class="btn-sm btn-success">Cadastrar Cliente</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
